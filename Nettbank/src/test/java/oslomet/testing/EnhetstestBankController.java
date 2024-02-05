@@ -33,6 +33,30 @@ public class EnhetstestBankController {
     @Mock
     // denne skal Mock'es
     private Sikkerhet sjekk;
+    @Test
+    public void hentTransaksjoner_loggetInn(){
+        //arrange
+        Transaksjon enTransaksjon = new Transaksjon(2323, "32423423424", "03.10.2023",
+
+                "det ble betalt", "sdff", "234234234234");
+        when(sjekk.loggetInn()).thenReturn(2323);
+
+        when(repository.hentTransaksjoner(anyString())).thenReturn(enTransaksjon);
+        //act
+        Transaksjon action = bankController.hentTransaksjoner();
+        //assert
+        assertEquals(enTransaksjon, action);
+
+
+    }
+    @Test
+    public void hentTransaksjoner_ikkeLoggetInn();
+    //arrange
+    when(sjekk.loggetInn()).thenReturn(null);
+    //act
+    Transaksjon action = bankController.hentTransaksjoner();
+    //assert
+    assertNull(action);
 
     @Test
     public void hentKundeInfo_loggetInn() {
@@ -100,5 +124,73 @@ public class EnhetstestBankController {
         // assert
         assertNull(resultat);
     }
+    @Test
+    public void hentSaldi_loggetInn(){
+        //arrange
+        List<Konto> kontoen = new ArrayList<>();
+        Konto konto1 = ("123456", "34343434", 205000, "spare", "nok", new ArrayList<>());
+        Konto konto2 = ("453434", "78787878", 608000, "lønn", "nok", new ArrayList<>());
+        Kontoen.add(konto1);
+        Kontoen.add(konto2);
+        when(sjekk.loggetInn()).thenReturn("123456");
+        when(repository.hentSaldi(anyString())).thenReturn(kontoen);
+        //act
+        List<konto> result = bankController.hentSaldi();
+        //assert
+        assertEquals(kontoen, result);
+
+    }
+    @Test
+    public void hentSaldi_ikkeLoggetInn(){
+        //arrange
+        when(sjekk.loggetInn()).thenReturn(null);
+        //act
+        List<Konto> result = bankController.hentSaldi();
+        //assert
+        assertNull(result);
+    }
+    @Test
+    public void registrerBetaling_fullfort(){
+        //arrange
+        Transaksjon betaling = new Transaksjon(232, "23434", 500000, "04.10.2023", "hei",
+                "3434", "4334545");
+
+        when(db.update(anyString())).thenReturn(232);
+        when(repository.registrerBetaling(anyString())).thenReturn(betaling);
+        //act
+        Transaksjon result = bankController.registrerBetaling();
+        //assert
+        assertEquals(betaling, result);
+    }
+    @Test
+    public void registrerBetaling_ikkeFullfort(){
+        //arrange
+        when(db.update(anyString())).thenReturn(null);
+        //act
+        Transaksjon result = bankController.registrerBetaling();
+        //assert
+        assertNull(result);
+    }
+    @Test
+    public void hentBetaling_fullfort(){
+        //arrange
+        Transaksjon enTransaksjon = new Transaksjon;
+
+        //when(sjekk.loggetInn()).thenReturn("33");
+        when(db.query(anyString(), any(), any(), any(), any(), any(), any(),"1" )).thenReturn(enTransaksjon);
+        when(repository.hentBetaling(anyString())).thenReturn();
+        //act
+        Transaksjon result = bankController.hentBetaling();
+        //assert
+        assertEquals(kontoen, result);
+    }
+    @Test
+    public void hentBetaling_ikkeFullfort(){
+        //arrange
+        when(db.update(anyString())).thenReturn(null);
+        //act
+        Transaksjon result = bankController.registrerBetaling();
+        //assert
+        assertNull(result);
 }
 
