@@ -174,6 +174,28 @@ public class EnhetstestBankController {
     @Test
     public void hentBetaling_fullfort(){
         //arrange
+        //Transaksjon enTransaksjon = new Transaksjon(2345,"34534" 3435,56,"43545","23423","3434","3454");
+        Konto enKonto = new Konto("32","35",45.456,"spare","nok",new ArrayList<>());
+
+        when(sjekk.loggetInn).thenReturn("32");
+        when(repository.hentBetaling(anyString())).thenReturn(enKonto);
+        //act
+        Transaksjon result = bankController.hentBetaling();
+        //assert
+        assertEquals(enKonto, result);
+    }
+    @Test
+    public void hentBetaling_ikkeFullfort() {
+        //arrange
+        when(sjekk.loggetInn()).thenReturn(null);
+        //act
+        Transaksjon result = bankController.hentBetaling();
+        //assert
+        assertNull(result);
+    }
+    @Test
+    public void utfortBetalingen(){
+        //arrange
         Transaksjon enTransaksjon = new Transaksjon;
 
         //when(sjekk.loggetInn()).thenReturn("33");
@@ -185,12 +207,11 @@ public class EnhetstestBankController {
         assertEquals(kontoen, result);
     }
     @Test
-    public void hentBetaling_ikkeFullfort(){
+    public void ikke_UtfortBetalingen(){
         //arrange
-        when(db.update(anyString())).thenReturn(null);
+        when(db.query(anyString(), any(),any(), any(), any(), any(), any())).thenReturn(null);
         //act
         Transaksjon result = bankController.registrerBetaling();
         //assert
         assertNull(result);
 }
-
