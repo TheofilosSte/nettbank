@@ -36,16 +36,18 @@ public class EnhetstestBankController {
     @Test
     public void hentTransaksjoner_loggetInn(){
         //arrange
-        Transaksjon enTransaksjon = new Transaksjon(2323, "32423423424", "03.10.2023",
+        List<Transaksjon> allTransaksjoner = new ArrayList<>();
+        Transaksjon transaksjon1 = (21, "34", 232423.745, "3434445","435345","3523234","345345345");
+        Transaksjon transaksjon2 = (261, "374", 2632423.745, "34344445","4335345","35223234","3453453455");
+        allTransaksjoner.add(transaksjon1);
+        allTransaskjoner.add(transaksjon2);
+        when(sjekk.loggetInn()).thenReturn(personnummer);
 
-                "det ble betalt", "sdff", "234234234234");
-        when(sjekk.loggetInn()).thenReturn(2323);
-
-        when(repository.hentTransaksjoner(anyString())).thenReturn(enTransaksjon);
+        when(repository.hentTransaksjoner(anyString())).thenReturn(allTransaksjoner);
         //act
         Transaksjon action = bankController.hentTransaksjoner();
         //assert
-        assertEquals(enTransaksjon, action);
+        assertEquals(allTransaksjoner, action);
 
 
     }
@@ -174,15 +176,13 @@ public class EnhetstestBankController {
     @Test
     public void hentBetaling_fullfort(){
         //arrange
-        //Transaksjon enTransaksjon = new Transaksjon(2345,"34534" 3435,56,"43545","23423","3434","3454");
-        Konto enKonto = new Konto("32","35",45.456,"spare","nok",new ArrayList<>());
-
-        when(sjekk.loggetInn).thenReturn("32");
-        when(repository.hentBetaling(anyString())).thenReturn(enKonto);
-        //act
-        Transaksjon result = bankController.hentBetaling();
-        //assert
-        assertEquals(enKonto, result);
+        List<Transaksjon> betallinger = new ArrayList<>();
+        Transaksjon betalling1 = (21, "34", 232423.745, "3434445","435345","3523234","345345345");
+        Transaksjon betalling2 = (261, "374", 2632423.745, "34344445","4335345","35223234","3453453455");
+        betallinger.add(betalling1);
+        betallinger.add(betalling2);
+        when(sjekk.loggetInn()).thenReturn(personnummer);
+        when(repository.hentbetallinger(anyString())).thenReturn(betallinger);
     }
     @Test
     public void hentBetaling_ikkeFullfort() {
