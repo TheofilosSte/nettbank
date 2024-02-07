@@ -183,6 +183,10 @@ public class EnhetstestBankController {
         betallinger.add(betalling2);
         when(sjekk.loggetInn()).thenReturn(personnummer);
         when(repository.hentbetallinger(anyString())).thenReturn(betallinger);
+        //act
+        List<Transaksjon> sesult = bankController.hentBtallinger();
+        //assert
+        assertEquals(betallinger, result);
     }
     @Test
     public void hentBetaling_ikkeFullfort() {
