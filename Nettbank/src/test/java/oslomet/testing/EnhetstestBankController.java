@@ -37,8 +37,8 @@ public class EnhetstestBankController {
     public void hentTransaksjoner_loggetInn(){
         //arrange
         List<Transaksjon> allTransaksjoner = new ArrayList<>();
-        Transaksjon transaksjon1 = (21, "34", 232423.745, "3434445","435345","3523234","345345345");
-        Transaksjon transaksjon2 = (261, "374", 2632423.745, "34344445","4335345","35223234","3453453455");
+        Transaksjon transaksjon1 = new Transaksjon(21, "34", 232423.745, "3434445","435345","3523234","345345345");
+        Transaksjon transaksjon2 = new Transaksjon(261, "374", 2632423.745, "34344445","4335345","35223234","3453453455");
         allTransaksjoner.add(transaksjon1);
         allTransaskjoner.add(transaksjon2);
         when(sjekk.loggetInn()).thenReturn(personnummer);
@@ -157,7 +157,7 @@ public class EnhetstestBankController {
         Transaksjon betaling = new Transaksjon(232, "23434", 500000, "04.10.2023", "hei",
                 "3434", "4334545");
 
-        when(db.update(anyString())).thenReturn(232);
+        when(sjekk.loggetInn()).thenReturn(232);
         when(repository.registrerBetaling(anyString())).thenReturn(betaling);
         //act
         Transaksjon result = bankController.registrerBetaling();
@@ -167,9 +167,9 @@ public class EnhetstestBankController {
     @Test
     public void registrerBetaling_ikkeFullfort(){
         //arrange
-        when(db.update(anyString())).thenReturn(null);
+        when(sjekk.loggetInn()).thenReturn(null);
         //act
-        Transaksjon result = bankController.registrerBetaling();
+        String result = bankController.registrerBetaling();
         //assert
         assertNull(result);
     }
@@ -177,11 +177,11 @@ public class EnhetstestBankController {
     public void hentBetaling_fullfort(){
         //arrange
         List<Transaksjon> betallinger = new ArrayList<>();
-        Transaksjon betalling1 = (21, "34", 232423.745, "3434445","435345","3523234","345345345");
-        Transaksjon betalling2 = (261, "374", 2632423.745, "34344445","4335345","35223234","3453453455");
+        Transaksjon betalling1 = new Transakjon (21, "34", 232423.745, "3434445","435345","3523234","345345345");
+        Transaksjon betalling2 = new Transaksjon(261, "374", 2632423.745, "34344445","4335345","35223234","3453453455");
         betallinger.add(betalling1);
         betallinger.add(betalling2);
-        when(sjekk.loggetInn()).thenReturn(personnummer);
+        when(sjekk.loggetInn()).thenReturn("personnummer");
         when(repository.hentbetallinger(anyString())).thenReturn(betallinger);
         //act
         List<Transaksjon> sesult = bankController.hentBtallinger();
@@ -200,22 +200,22 @@ public class EnhetstestBankController {
     @Test
     public void utfortBetalingen(){
         //arrange
-        Transaksjon enTransaksjon = new Transaksjon;
+        Transaksjon enTransaksjon = new Transaksjon(2323,"454545",23434.565,"23.10.2023","hei","3","3343");
 
         //when(sjekk.loggetInn()).thenReturn("33");
-        when(db.query(anyString(), any(), any(), any(), any(), any(), any(),"1" )).thenReturn(enTransaksjon);
-        when(repository.hentBetaling(anyString())).thenReturn();
+        when(sjekk.loggetInn()).thenReturn(2323);
+        when(repository.utfortBetaling(anyString())).thenReturn(enTransaksjon);
         //act
-        Transaksjon result = bankController.hentBetaling();
+        Transaksjon result = bankController.utfortBetaling();
         //assert
-        assertEquals(kontoen, result);
+        assertEquals(enTransaksjon, result);
     }
     @Test
     public void ikke_UtfortBetalingen(){
         //arrange
-        when(db.query(anyString(), any(),any(), any(), any(), any(), any())).thenReturn(null);
+        when(sjekk.loggetInn()).thenReturn(null);
         //act
-        Transaksjon result = bankController.registrerBetaling();
+        Transaksjon result = bankController.utfortBetaling();
         //assert
         assertNull(result);
 }

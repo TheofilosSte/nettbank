@@ -38,21 +38,24 @@ public class EnhetstestBankController {
     @Test
     public void hentTransakjonerTest(){
         //arrange
-        Transaksjon enTransaksjon = new Transaksjon(3343434, "324334554545", 1000,
-                "03.05.2023", "hei", "sdsd", "1099000" );
-        when (sjekk.loggetInn()).thenReturn("3343434");
-        when(repository.hentTransaksjoner(anyString(), anyString(), anyString(), )).thenReturn(enTransaksjon);
+        Konto enKonto= new Konto("34","3434",23434.345,"spare","nok",null);
+        when (sjekk.loggetInn()).thenReturn("34");
+        when(repository.hentTransaksjoner(anyString(), anyString(),anyString())).thenReturn(enKonto);
 
         //act
-        Transaksjon fullfort = bankController.hentTransaksjoner();
+        Konto fullfort = bankController.hentTransaksjoner(anyString(), anyString(),anyString() );
         //asert
-        assertEquals(enTransaksjon, fullfort);
+        assertEquals(enKonto, fullfort);
 
     }
     @Test
     public void hentIkkeTransaksjonTest(){
         //arrange
-        when(sjekk.)
+        when(sjekk.loggetInn()).thenReturn(null);
+        //act
+        Konto resultat = bankController.hentTransaksjoner(null,null,null);
+        //assert
+        assertNull(resultat);
     }
     @Test
     public void hentKundeInfo_loggetInn() {
